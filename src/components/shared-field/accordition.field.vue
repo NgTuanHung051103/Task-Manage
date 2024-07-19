@@ -20,11 +20,11 @@ function toggleTaskDetails(id: string) {
 </script>
 
 <template>
-    <div class="ml-accordion-field" v-for="item in items" :key="item._id">
+    <div class="ml-accordion-field" v-for="item in items" :key="item.id">
         <div class="ml-accordion-field__nav">
             <slot name="header" :item="item" :events="{ toggleTaskDetails }"></slot>
         </div>
-        <div class="ml-accordion-field__body" v-show="item._id === activeId">
+        <div class="ml-accordion-field__body" v-show="item.id === activeId">
             <slot name="body" :item="item" ></slot>
         </div>
     </div>

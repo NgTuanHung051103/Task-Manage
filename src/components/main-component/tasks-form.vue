@@ -15,7 +15,6 @@ import bulkField from "../shared-field/bulk.field.vue";
 import taskForm from "./task-form.vue";
 import useTask from "../../uses/useTask";
 
-
 const keywords = ref<string>("");
 const queueActions = ref<string[]>([]);
 const trackingNumber = ref<number>(1101997);
@@ -43,10 +42,11 @@ async function onCompleteTasks() {
     trackingNumber.value = Math.floor(Math.random() * (1101998 - 11 + 1) + 11);
 }
 
-function onDeleteTask(id: string){
+async function onDeleteTask(id: string){
     const option = confirm("Are u sure?");
     if(option){
-        deleteTask(id);
+        await deleteTask(id); 
+        await fetchTasks()
     }
 }
 
@@ -92,28 +92,29 @@ function onSelectedTask($event: Event, id: string){
         </recordAlertField>
         <rowShared v-else>
             <AccorditionField id="tasks" :items="tasksFiltered" ref="hello">
-                <template #header="{ item, events: {toggleTaskDetails}} : {item: AccordionItemsTypes, events: {toggleTaskDetails:any}}">
-                    <div class="flex justify-between p-4">
+                <template #header="{ item, events: {toggleTaskDetails}} 
+                    : {item: AccordionItemsTypes, events: {toggleTaskDetails:any}}">
+                    <div class="d-flex justify-between p-4">
                         <div class="flex items-center">
                             <checkboxField
-                            :id="`accordion_${item._id}`"
-                            :name="`accordion_${item._id}`"
-                            :label="item.title"
-                            :value="item.completed"
-                            @change="onSelectedTask($event, item._id as string)"
-                        />
+                                :id="`accordion_${item.id}`"
+                                :name="`accordion_${item.id}`"
+                                :label="item.title"
+                                :value="item.completed"
+                                @change="onSelectedTask($event, item.id as string)"
+                            />
                         </div>
                         <div class="ml-auto flex gap-4">
                             <buttonShared
                                 class="ad-button-default"
                                 type="button"
-                                @click="toggleTaskDetails(item._id as string)"
+                                @click="toggleTaskDetails(item.id as string)"
                             >Detail
                             </buttonShared>
                             <buttonShared
                                 class="ad-button-danger"
                                 type="button"
-                                @click="onDeleteTask(item._id as string)"
+                                @click="onDeleteTask(item.id as string)"
                             >Remove
                             </buttonShared>
                         </div>

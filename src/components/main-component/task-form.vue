@@ -43,13 +43,16 @@ const props = defineProps({
 
 const emits = defineEmits(['reset'])
 
-const { createNewTask, updateTask, state } = useTask();
+const { createNewTask, updateTask, state, fetchTasks } = useTask();
 
 async function onSubmit() {
-    if(props.item._id){
-        await updateTask(props.item._id, props.item)
+    if(props.item.id){
+        await updateTask(props.item.id, props.item)
     } else {
-        await createNewTask(props.item)
+        let isCreated = await createNewTask(props.item)
+        if( isCreated ){
+            await fetchTasks();
+        }
         emits('reset')
     }
 }
@@ -90,8 +93,8 @@ async function onSubmit() {
                 />
             </rowShared>
             <rowShared>
-                <buttonShared class="ad-button-primary" type="button">
-                    {{ item._id ? 'Update' : 'Add'}}
+                <buttonShared class="ad-button-primary" type="submit">
+                    {{ item.id ? 'Update' : 'Add'}}
                 </buttonShared>
             </rowShared>
             <rowShared>

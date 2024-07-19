@@ -31,10 +31,14 @@ export default function useTask(){
     async function createNewTask (dto: AccordionItemsTypes) {
         if(dto.title === ''){
             showFlash('Title task is a required field!')
-        } else if ( dateInPast(new Date(dto.dueDate), new Date())){
-            showFlash("Duedate task is not allow a day in past!");
+        // } else if ( dateInPast(new Date(dto.dueDate), new Date())){
+        //     showFlash("Duedate task is not allow a day in past!");
         } else {
-            await onCreateNewTask(dto);
+            let response = await onCreateNewTask(dto);
+            if(response.status === 201){
+                showFlash('Complete creating new task')
+                return true;
+            }
         }
     }
 

@@ -9,12 +9,12 @@ export const onCompleteTask = (id: string, status: boolean) => {
 };
 
 export const onCreateNewTask = (dto: AccordionItemsTypes) => {
-    return fetchApi.post(`/tasks/new`, dto);
+    return fetchApi.post(`/tasks`, dto);
 };
 
 export const onFetchTasks = async (): Promise<AccordionItemsTypes[]> => {
-    const result = await fetchApi.get(`/tasks/list`);
-    return result?.data.tasks;
+    const result = await fetchApi.get(`/tasks`);
+    return result?.data;
 };
 
 export const onDeleteTask = (id: string) => {
