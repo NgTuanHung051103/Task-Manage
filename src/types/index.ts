@@ -6,3 +6,8 @@ export type AccordionItemsTypes = {
     priority: string;
     completed?: boolean;
 };
+
+export type User = {
+    userName: string;
+    password: string;
+}
