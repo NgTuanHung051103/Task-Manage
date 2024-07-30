@@ -20,12 +20,16 @@ const emits = defineEmits(['login'])
 const { Login } = useUser();
 
 async function onSubmit() {
+    if(props.user.userName.trim() == '' || props.user.password.trim() == ''){
+        return;
+    }
     let userLogin : User = {
         userName: props.user.userName,
         password: props.user.password,
     }
     let isLogin = await Login(userLogin);
-    if(isLogin != undefined && isLogin.status == 201){
+    
+    if(isLogin != undefined){
         validUser.value = true;
     }
 }

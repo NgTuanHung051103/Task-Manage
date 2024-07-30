@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from "@vue/runtime-core";
-import type { AccordionItemsTypes } from '../../types'
+import { onMounted, ref, computed, PropType } from "@vue/runtime-core";
+import type { AccordionItemsTypes,User } from '../../types'
 
 import rowShared from "../shared-dom/row.shared.vue";
 import textShared from "../shared-dom/text.shared.vue";
@@ -11,15 +11,29 @@ import inputField from "../shared-field/input.field.vue";
 import AccorditionField from "../shared-field/accordition.field.vue";
 import checkboxField from "../shared-field/checkbox.field.vue";
 import bulkField from "../shared-field/bulk.field.vue";
+import chatboxField from "../shared-field/chatbox.field.vue";
 
 import taskForm from "./task-form.vue";
 import useTask from "../../uses/useTask";
+import useUser from "../../uses/useUser";
+import useMessages from "../../uses/useMessage";
+
+defineProps({
+    user: {
+        type: Object as PropType<User>,
+        required: true
+    }
+})
 
 const keywords = ref<string>("");
 const queueActions = ref<string[]>([]);
 const trackingNumber = ref<number>(1101997);
 
 const { state, completeTask, deleteTask, fetchTasks } = useTask();
+
+onMounted( async () => {
+    await fetchTasks();
+})
 
 const tasksFiltered = computed( () => {
     if(trackingNumber.value){
@@ -73,6 +87,17 @@ function onSelectedTask($event: Event, id: string){
     }
 }
 
+const { getMessages } = useMessages();
+
+const selectedTask = ref<string>('')
+
+async function toggleTaskChat(taskId: string){
+    if ( selectedTask.value !== taskId){
+        selectedTask.value = taskId;
+        await getMessages(taskId)
+    }
+}
+
 </script>
 
 <template>
@@ -117,6 +142,12 @@ function onSelectedTask($event: Event, id: string){
                                 @click="onDeleteTask(item.id as string)"
                             >Remove
                             </buttonShared>
+                            <buttonShared
+                                class="ad-button-danger"
+                                type="button"
+                                @click=" toggleTaskChat(item.id as string)"
+                            >Chat
+                            </buttonShared>
                         </div>
                     </div>
                 </template>
@@ -146,5 +177,12 @@ function onSelectedTask($event: Event, id: string){
                 >Remove</buttonShared>
             </template>
         </bulkField>
+    </rowShared>
+    <rowShared v-if="selectedTask !== ''">
+        <textShared class="text-center" tag="h1">Chat</textShared>
+        <chatboxField
+            :task-id="selectedTask"
+        >
+        </chatboxField>
     </rowShared>
 </template>

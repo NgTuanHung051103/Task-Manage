@@ -8,6 +8,15 @@ export type AccordionItemsTypes = {
 };
 
 export type User = {
+    id?: string;
     userName: string;
     password: string;
+}
+
+export type Message = {
+    id: String;
+    taskId: string;
+    userId: string;
+    content: string;
+    date: number;
 }

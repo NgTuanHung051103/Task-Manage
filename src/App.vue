@@ -37,7 +37,7 @@ const user = ref<User>({
                 }
             "
         />
-        <tasksForm/>
+        <tasksForm :user="user"/>
     </rowShared>
     <flashNotificationField message="hello ca nha"/>
 </template>

@@ -195,7 +195,7 @@ textarea:focus {
 /* Custom Classes */
 
 .layout {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  /* grid-template-columns: repeat(1, minmax(0, 1fr)); */
 }
 
 .container {
@@ -207,19 +207,19 @@ textarea:focus {
 
 @media (min-width: 768px) {
   .layout {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 992px) {
   .container {
-    width: 80%;
+    /* width: 80%; */
   }
 }
 
 @media (min-width: 1200px) {
   .container {
-    width: 70%;
+    /* width: 70%; */
   }
 }
 
@@ -328,3 +328,69 @@ textarea:focus {
   box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
     rgb(0 0 0 / 5%) 0px 1px 2px 0px;
 }
+
+
+.chat-container { 
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+} 
+
+.message-container { 
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 10px;
+} 
+
+.message { 
+  display: flex;
+  flex-direction: column;
+  padding: 10px; 
+  margin: 10px; 
+  border-radius: 5px; 
+  max-width: 70%; 
+  word-wrap: break-word; 
+  text-align: left;
+} 
+
+.sender-message { 
+  background-color: #e0e0e0; 
+  color: #000; 
+  align-self: flex-start; 
+} 
+
+.receiver-message { 
+  background-color: #4CAF50; 
+  color: #fff; 
+  align-self: flex-end; 
+} 
+
+.avatar { 
+  width: 30px; 
+  height: 30px; 
+  border-radius: 50%; 
+  margin-right: 10px; 
+} 
+
+.message input { 
+  width: calc(100% - 20px); 
+  padding: 8px; 
+  margin: 10px; 
+  border: 1px solid #ddd; 
+  border-radius: 5px; 
+} 
+
+.message button { 
+  padding: 8px; 
+  margin: 10px; 
+  background-color: #4CAF50; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+} 
